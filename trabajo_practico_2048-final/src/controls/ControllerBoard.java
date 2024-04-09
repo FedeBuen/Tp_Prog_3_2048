@@ -114,7 +114,7 @@ public class ControllerBoard {
 		return moved;
 	}
 
-	public boolean moveDown() {
+	public boolean moveDown(boolean mover) {
 		boolean moved = false;
 		for (int col = 0; col < board.getSize(); col++) {
 			for (int row = board.getSize() - 2; row >= 0; row--) {
@@ -122,14 +122,16 @@ public class ControllerBoard {
 					// Mover el elemento hacia abajo
 					int currentRow = row;
 					while (currentRow + 1 < board.getSize() && board.isZero(currentRow + 1, col)) {
-						board.setElement(currentRow + 1, col, board.getElement(currentRow, col));
-						board.setZero(currentRow, col);
-						currentRow++;
-						moved = true;
+
+							board.setElement(currentRow + 1, col, board.getElement(currentRow, col));
+							board.setZero(currentRow, col);
+							currentRow++;
+							moved = true;						
 					}
 					// Fusionar elementos si son iguales
 					if (currentRow + 1 < board.getSize()
 							&& board.getElement(currentRow + 1, col) == board.getElement(currentRow, col)) {
+						
 						score += board.setDouble(currentRow + 1, col);
 						setWin(board.getElement(currentRow + 1, col));
 						board.setZero(currentRow, col);
@@ -193,6 +195,86 @@ public class ControllerBoard {
 			}
 		}
 		return moved;
+	}
+	
+	
+	public int testUp() {
+		int suma = 0;
+		for (int col = 0; col < board.getSize(); col++) {
+			for (int row = 1; row < board.getSize(); row++) {
+				if (!board.isZero(row, col)) { // Si el elemento no es cero
+					int currentRow = row;
+					while (currentRow > 0 && board.isZero(currentRow - 1, col)) {
+							currentRow--;
+					}
+					// Fusionar elementos si son iguales
+					if(currentRow > 0 && board.getElement(currentRow - 1, col) == board.getElement(row, col)) { 
+						suma += board.getElement(row, col);
+					}
+				}
+			}
+		}
+		return suma;
+	}
+	
+	public int testDown() {
+		int suma = 0;
+		for (int col = 0; col < board.getSize(); col++) {
+			for (int row = board.getSize() - 2; row >= 0; row--) {
+				if (!board.isZero(row, col)) { // Si el elemento no es cero
+					int currentRow = row;
+					while (currentRow + 1 < board.getSize() && board.isZero(currentRow + 1, col)) {
+							currentRow++;
+					}
+					// Fusionar elementos si son iguales
+					if(currentRow + 1 < board.getSize()
+							&& board.getElement(row, col) == board.getElement(currentRow + 1, col)) { 
+						suma += board.getElement(row, col);
+					}
+				}
+			}
+		}
+		return suma;
+	}
+	
+	public int testRight() {
+		int suma = 0;
+		for (int row = 0; row < board.getSize(); row++) {
+			for (int col = board.getSize() - 2; col >= 0; col--) {
+				if (!board.isZero(row, col)) { // Si el elemento no es cero
+					int currentCol = col;
+					while (currentCol + 1 < board.getSize() && board.isZero(row, currentCol + 1)) {
+							currentCol++;
+					}
+					// Fusionar elementos si son iguales
+					if(currentCol + 1 < board.getSize()
+							&& board.getElement(row, currentCol + 1) == board.getElement(row, col)) { 
+						suma += board.getElement(row, col);
+					}
+				}
+			}
+		}
+		return suma;
+	}
+
+	public int testLeft() {
+		int suma = 0;
+		for (int row = 0; row < board.getSize(); row++) {
+			for (int col = 1; col < board.getSize(); col++) {
+				if (!board.isZero(row, col)) { // Si el elemento no es cero
+					int currentCol = col;
+					while (currentCol - 1 >= 0 && board.getElement(row, currentCol - 1) == 0) {
+							currentCol--;
+					}
+					// Fusionar elementos si son iguales
+					if(currentCol - 1 >= 0
+							&& board.getElement(row, currentCol - 1) == board.getElement(row, col)) { 
+						suma += board.getElement(row, col);
+					}
+				}
+			}
+		}
+		return suma;
 	}
 	
 	

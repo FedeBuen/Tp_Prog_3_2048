@@ -114,7 +114,7 @@ public class FrmBoard extends JFrame {
 					JOptionPane.showMessageDialog(null, "Usted Gana !!!", "Felicitaciones",
 							JOptionPane.INFORMATION_MESSAGE);
 					saveScore();
-				} else if (game.getWin() == -1) {
+				} else if (game.perdio()) {
 					loadElement();
 					tblBoard.setEnabled(false);
 					JOptionPane.showMessageDialog(null, "No logro el objetivo !!!", "Game Over",
@@ -129,12 +129,15 @@ public class FrmBoard extends JFrame {
 		btnNew.setFocusable(false);
 		btnNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				game.test();
+				/*
 				lblScore.setText("0");
 				btnNew.setFocusable(false);
 				tblBoard.setFocusable(true);
 				tblBoard.setEnabled(true);
 				initializeGame();
 				loadElement();
+				*/
 			}
 		});
 		btnNew.setBounds(298, 8, 130, 25);

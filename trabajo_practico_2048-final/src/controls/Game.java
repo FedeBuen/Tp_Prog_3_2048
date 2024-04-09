@@ -29,11 +29,11 @@ public class Game {
 		switch (key) {
 		case "UP" -> moved = ctrBoard.moveUp();
 		case "LEFT" -> moved = ctrBoard.moveLeft();
-		case "DOWN" -> moved = ctrBoard.moveDown();
+		case "DOWN" -> moved = ctrBoard.moveDown(true);
 		case "RIGHT" -> moved = ctrBoard.moveRight();
 		case "ARRIBA" -> moved = ctrBoard.moveUp();
 		case "IZQUIERDA" -> moved = ctrBoard.moveLeft();
-		case "ABAJO" -> moved = ctrBoard.moveDown();
+		case "ABAJO" -> moved = ctrBoard.moveDown(true);
 		case "DERECHA" -> moved = ctrBoard.moveRight();
 		default -> moved = false;
 		}
@@ -62,7 +62,7 @@ public class Game {
 			switch (direction) {
 			case "W" -> moved = ctrBoard.moveUp();
 			case "A" -> moved = ctrBoard.moveLeft();
-			case "S" -> moved = ctrBoard.moveDown();
+			case "S" -> moved = ctrBoard.moveDown(true);
 			case "D" -> moved = ctrBoard.moveRight();
 			case "X" -> exit = true;
 			default -> System.out.println("Invalid direction. Please enter W/A/S/D.");
@@ -88,9 +88,32 @@ public class Game {
 	}
 		
 	public int getWin() {
-		if (ctrBoard.boardIsFull()) {
-			return -1;
-		}
 		return ctrBoard.getWin();
+	}
+	
+	public void test() {
+		int up = ctrBoard.testUp();
+		int down = ctrBoard.testDown();
+		int left = ctrBoard.testLeft();
+		int right = ctrBoard.testRight();
+		System.out.println(this.mayor(up,down,left,right));
+	}
+	
+	public boolean perdio() {
+		boolean suma = true;
+		suma &= ctrBoard.boardIsFull();
+		suma &= ctrBoard.testDown() == 0;
+		suma &= ctrBoard.testUp() == 0;
+		suma &= ctrBoard.testLeft() == 0;
+		suma &= ctrBoard.testRight() == 0;
+		return suma;
+	}
+	
+	private String mayor(int nu, int nd, int nl, int nr) {
+		if (nu>nl && nu>nr) 
+			return "VERTICAL";
+		if (nl>nu && nl>nd) 
+			return "HORIZONTAL";
+		return "...";
 	}
 }
