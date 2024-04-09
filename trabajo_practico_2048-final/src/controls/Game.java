@@ -109,11 +109,13 @@ public class Game {
 		return suma;
 	}
 	
-	private String mayor(int nu, int nd, int nl, int nr) {
-		if (nu>nl && nu>nr) 
+	private String mayor(int numUp, int numDown, int numLeft, int numRight) {
+		if (numUp>numLeft && numUp>numRight) 
 			return "VERTICAL";
-		if (nl>nu && nl>nd) 
+		if (numLeft>numUp && numLeft>numDown) 
 			return "HORIZONTAL";
-		return "...";
+		if (numUp + numDown + numLeft + numRight == 0)
+		return "NO";
+		return "CUALQUIERA";
 	}
 }
