@@ -21,7 +21,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import controls.Board;
-import forms.CustomDialog;
 import controls.FileScoresManager;
 import controls.Game;
 import controls.Player;
@@ -102,6 +101,7 @@ public class FrmBoard extends JFrame {
 		tblBoard.setBackground(customColor);
 		tblBoard.setBounds(180, 88, 424, 407);
 
+
 		contentPane.add(tblBoard);
 
 		tblBoard.setDefaultRenderer(Object.class, new TableCellRenderer() {
@@ -138,15 +138,17 @@ public class FrmBoard extends JFrame {
 				if (game.isWin()) {
 					message = "Completo el juego con exito!!";
 					loadElement();
-					 tblBoard.setEnabled(false);
-				        CustomDialog winDialog = new CustomDialog("images/winPhoto.jpg");
-				        winDialog.setVisible(true);
+					tblBoard.removeKeyListener(keyListener);
+					CustomDialog winDialog = new CustomDialog("images/winPhoto.jpg", message);
+					winDialog.setVisible(true);
+					saveScore();
 				} else if (game.isEnd()) {
+					message = "Game Over!!";
 					loadElement();
-			        tblBoard.setEnabled(false);
-			        CustomDialog gameOverDialog = new CustomDialog("images/lostPhoto.jpg");
-			        gameOverDialog.setVisible(true);
-			        saveScore();
+					tblBoard.removeKeyListener(keyListener);
+					CustomDialog gameOverDialog = new CustomDialog("images/lostPhoto.jpg", message);
+					gameOverDialog.setVisible(true);
+					saveScore();
 				}
 				loadElement();
 			}
@@ -181,11 +183,11 @@ public class FrmBoard extends JFrame {
 
 			}
 		});
-		btnNew.setBounds(200, 519, 173, 25);
+		btnNew.setBounds(320, 519, 120, 25);
 		contentPane.add(btnNew);
 
 		JButton btnClue = new JButton("Sugerir movimiento");
-		btnClue.setFont(new Font("Kristen ITC", Font.PLAIN, 12));
+		btnClue.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
 		btnClue.setFocusable(false);
 		btnClue.setFocusTraversalKeysEnabled(false);
 		btnClue.setFocusPainted(false);
@@ -201,16 +203,40 @@ public class FrmBoard extends JFrame {
 
 		});
 
-		btnClue.setBounds(410, 519, 173, 25);
+		btnClue.setBounds(450, 519, 150, 25);
 		contentPane.add(btnClue);
 
 		lblClue = new JLabel("mejor jugada");
 		lblClue.setForeground(new Color(0, 196, 156));
-		lblClue.setFont(new Font("Kristen ITC", Font.BOLD, 16));
-		lblClue.setBounds(600, 519, 173, 25);
+		lblClue.setFont(new Font("Kristen ITC", Font.BOLD, 14));
+		lblClue.setBounds(620, 519, 170, 25);
 		contentPane.add(lblClue);
-		
-		
+
+		JButton btnBack = new JButton("Volver");
+		btnBack.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
+		btnBack.setFocusable(false);
+		btnBack.setFocusTraversalKeysEnabled(false);
+		btnBack.setFocusPainted(false);
+		btnBack.setBorder(null);
+		btnBack.setForeground(new Color(18, 2, 43));
+		btnBack.setBackground(new Color(239, 3, 65));
+		btnBack.setFocusable(false);
+
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				int option = JOptionPane.showConfirmDialog(null, "¿Desea volver al menu?", "Confirmar",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (option == JOptionPane.OK_OPTION) {
+					setVisible(false);
+				}
+			}
+
+		});
+		btnBack.setBounds(190, 519, 120, 25);
+
+		contentPane.add(btnBack);
+
 		initializeGame();
 		loadElement();
 

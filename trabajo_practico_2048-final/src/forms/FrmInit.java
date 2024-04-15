@@ -7,7 +7,6 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -63,10 +62,6 @@ public class FrmInit {
 		frmInit.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmInit.setLocationRelativeTo(null);
 		frmInit.getContentPane().setLayout(null);
-		//******* NO CARGA EL ICONO ??
-		//ImageIcon icon = new ImageIcon("images/2048.svg");
-		frmInit.setIconImage(new ImageIcon("images/2048.svg").getImage());
-		//*******
        
         JPanel panel = new JPanel() {
             private static final long serialVersionUID = 1L;

@@ -125,9 +125,27 @@ public class FrmScores extends JFrame {
 			        }
 			}
 		});
-		btnBorrarPuntajes.setBounds(300, 400, 173, 25);
+		btnBorrarPuntajes.setBounds(200, 400, 173, 25);
+		
+		JButton btnBack = new JButton("Volver");
+		btnBack.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
+		btnBack.setFocusable(false);
+		btnBack.setFocusTraversalKeysEnabled(false);
+		btnBack.setFocusPainted(false);
+		btnBack.setBorder(null);
+		btnBack.setForeground(new Color(18, 2, 43));
+		btnBack.setBackground(new Color(239, 3, 65));
+		btnBack.setFocusable(false);
+		
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+			}
+		});
+		btnBack.setBounds(400, 400, 173, 25);
+		
 		contentPane.add(btnBorrarPuntajes);
-	
+		contentPane.add(btnBack);
 		listPlayers = fsm.getPlayers();
 		loadElement();
 		
