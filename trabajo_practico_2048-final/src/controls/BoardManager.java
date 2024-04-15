@@ -6,12 +6,12 @@ import java.util.Random;
  * Clase que controla la funcionalidad del tablero y sus movimientos
  * 
  */
-public class ControllerBoard {
+public class BoardManager {
 	private Board board;
 	private int score;
-	private int win;
+	private int maxNumber;
 	
-	public ControllerBoard(Board board) {
+	public BoardManager(Board board) {
 		this.board = board;
 		this.score = 0;
 	}
@@ -37,20 +37,6 @@ public class ControllerBoard {
 			col = random.nextInt(board.getSize());
 		} while (!board.isZero(row, col));
 		board.setElement(row, col, value);
-	}
-
-	/**
-	 * Imprime por consola el tablero
-	 * ----- SOLO SE USA PARA PRUEBAS DE DESARROLLO --------
-	 */
-	public void printBoard() {
-		for (int i = 0; i < board.getSize(); i++) {
-			for (int j = 0; j < board.getSize(); j++) {
-				System.out.print(board.getElement(i, j) + "  ");
-			}
-			System.out.println();
-		}
-		System.out.println("SCORE: " + score);
 	}
 
 	/**
@@ -103,7 +89,7 @@ public class ControllerBoard {
 					// Fusionar elementos si son iguales
 					if (currentRow > 0 && board.getElement(currentRow - 1, col) == board.getElement(currentRow, col)) {
 						score += board.setDouble(currentRow - 1, col);
-						setWin(board.getElement(currentRow - 1, col));
+						setMaxNumber(board.getElement(currentRow - 1, col));
 						board.setZero(currentRow, col);
 						moved = true;
 					}
@@ -114,7 +100,7 @@ public class ControllerBoard {
 		return moved;
 	}
 
-	public boolean moveDown(boolean mover) {
+	public boolean moveDown() {
 		boolean moved = false;
 		for (int col = 0; col < board.getSize(); col++) {
 			for (int row = board.getSize() - 2; row >= 0; row--) {
@@ -133,7 +119,7 @@ public class ControllerBoard {
 							&& board.getElement(currentRow + 1, col) == board.getElement(currentRow, col)) {
 						
 						score += board.setDouble(currentRow + 1, col);
-						setWin(board.getElement(currentRow + 1, col));
+						setMaxNumber(board.getElement(currentRow + 1, col));
 						board.setZero(currentRow, col);
 						moved = true;
 					}
@@ -160,7 +146,7 @@ public class ControllerBoard {
 					if (currentCol + 1 < board.getSize()
 							&& board.getElement(row, currentCol + 1) == board.getElement(row, currentCol)) {
 						score += board.setDouble(row, currentCol + 1);
-						setWin(board.getElement(row, currentCol + 1));
+						setMaxNumber(board.getElement(row, currentCol + 1));
 						board.setZero(row, currentCol);
 						moved = true;
 					}
@@ -187,7 +173,7 @@ public class ControllerBoard {
 					if (currentCol - 1 >= 0
 							&& board.getElement(row, currentCol - 1) == board.getElement(row, currentCol)) {
 						score += board.setDouble(row, currentCol - 1);
-						setWin(board.getElement(row, currentCol - 1));
+						setMaxNumber(board.getElement(row, currentCol - 1));
 						board.setZero(row, currentCol);
 						moved = true;
 					}
@@ -278,13 +264,13 @@ public class ControllerBoard {
 	}
 	
 	
-	public void setWin(int value) {
-		if (value > this.win) {
-			this.win = value;
+	public void setMaxNumber(int value) {
+		if (value > this.maxNumber) {
+			this.maxNumber = value;
 		}
 	}
 	
-	public int getWin() {
-		return this.win;
+	public int getMaxNumber() {
+		return this.maxNumber;
 	}
 }

@@ -1,22 +1,20 @@
 package controls;
 
 import java.util.List;
-import java.util.Scanner;
-
-
 
 public class Game {
-
-	private ControllerBoard ctrBoard;
+	private final int GAME_WIN = 2048;
+	private BoardManager boardManager;
 	FileScoresManager fsm = new FileScoresManager();
+	
 
 	public Game(Board board) {
-		ctrBoard = new ControllerBoard(board);
+		boardManager = new BoardManager(board);
 	}
 
 	public Board initialize() {
-		ctrBoard.initBoard();
-		return ctrBoard.getBoard();
+		boardManager.initBoard();
+		return boardManager.getBoard();
 		
 	}
 	
@@ -24,88 +22,54 @@ public class Game {
 		return fsm.getPlayers();
 	}
 
-	public Board play(String key) {
+	public Board play(int key) {
 		boolean moved = false;
 		switch (key) {
-		case "UP" -> moved = ctrBoard.moveUp();
-		case "LEFT" -> moved = ctrBoard.moveLeft();
-		case "DOWN" -> moved = ctrBoard.moveDown(true);
-		case "RIGHT" -> moved = ctrBoard.moveRight();
-		case "ARRIBA" -> moved = ctrBoard.moveUp();
-		case "IZQUIERDA" -> moved = ctrBoard.moveLeft();
-		case "ABAJO" -> moved = ctrBoard.moveDown(true);
-		case "DERECHA" -> moved = ctrBoard.moveRight();
+		case 38 -> moved = boardManager.moveUp();
+		case 37 -> moved = boardManager.moveLeft();
+		case 40 -> moved = boardManager.moveDown();
+		case 39 -> moved = boardManager.moveRight();
 		default -> moved = false;
 		}
 		if (moved) {
-			ctrBoard.addRandomElement();
+			boardManager.addRandomElement();
 		}
 		moved = false;
-		return ctrBoard.getBoard();
+		return boardManager.getBoard();
 
 	}
-
-	/**
-	 * Juego version consola 
-	 * ------ UTILIZADO SOLO PARA PRUEBAS DE DESAROLLO ******
-	 * 
-	 */
-	public int play() {
-		Scanner scanner = new Scanner(System.in);
-		ctrBoard.printBoard();
-		boolean moved = false;
-		boolean exit = false;
-		while (!ctrBoard.boardIsFull() && !exit) {
-
-			System.out.print("Enter direction (W/A/S/D) or exit (X) ");
-			String direction = scanner.next().toUpperCase();
-			switch (direction) {
-			case "W" -> moved = ctrBoard.moveUp();
-			case "A" -> moved = ctrBoard.moveLeft();
-			case "S" -> moved = ctrBoard.moveDown(true);
-			case "D" -> moved = ctrBoard.moveRight();
-			case "X" -> exit = true;
-			default -> System.out.println("Invalid direction. Please enter W/A/S/D.");
-
-			}
-			if (moved) {
-				ctrBoard.addRandomElement();
-			}
-			moved = false;
-			ctrBoard.printBoard();
-		}
-		System.out.println("Game Over");
-		scanner.close();
-		return ctrBoard.getScore();
-	}
-	
+		
 	public int getScore() {
-		return ctrBoard.getScore();
+		return boardManager.getScore();
 	}
 	
 	public int getMin() {
 		return fsm.getMinScore();
 	}
 		
-	public int getWin() {
-		return ctrBoard.getWin();
+	public boolean isWin() {
+		return boardManager.getMaxNumber() >= GAME_WIN;
 	}
 	
-	public void test() {
-		int up = ctrBoard.testUp();
-		int down = ctrBoard.testDown();
-		int left = ctrBoard.testLeft();
-		int right = ctrBoard.testRight();
-		System.out.println(this.mayor(up,down,left,right));
+	public int getMaxNumber() {
+		return boardManager.getMaxNumber();
 	}
 	
-	public boolean perdio() {
+	public String findBestMove() {
+		int up = boardManager.testUp();
+		int down = boardManager.testDown();
+		int left = boardManager.testLeft();
+		int right = boardManager.testRight();
+		return mayor(up,down,left,right);
+	}
+	
+	public boolean isEnd() {
 		boolean suma = true;
-		suma &= ctrBoard.boardIsFull();
-		suma &= ctrBoard.testDown() == 0;
-		suma &= ctrBoard.testUp() == 0;
-		suma &= ctrBoard.testLeft() == 0;
-		suma &= ctrBoard.testRight() == 0;
+		suma &= boardManager.boardIsFull();
+		suma &= boardManager.testDown() == 0;
+		suma &= boardManager.testUp() == 0;
+		suma &= boardManager.testLeft() == 0;
+		suma &= boardManager.testRight() == 0;
 		return suma;
 	}
 	
@@ -115,7 +79,7 @@ public class Game {
 		if (numLeft>numUp && numLeft>numDown) 
 			return "HORIZONTAL";
 		if (numUp + numDown + numLeft + numRight == 0)
-		return "NO";
-		return "CUALQUIERA";
+		return "NINGUNO SUMA";
+		return "CUALQUIERA SUMA";
 	}
 }

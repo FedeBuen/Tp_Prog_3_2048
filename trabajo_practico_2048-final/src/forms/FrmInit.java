@@ -1,6 +1,7 @@
 package forms;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
@@ -14,9 +15,11 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.ButtonGroup;
-import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.Component;
 
 public class FrmInit {
 
@@ -56,7 +59,7 @@ public class FrmInit {
 		frmInit = new JFrame();
 		frmInit.setResizable(false);
 		frmInit.setTitle("Juego 2048");
-		frmInit.setBounds(100, 100, 469, 377);
+		frmInit.setBounds(100, 100, 800, 600);
 		frmInit.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmInit.setLocationRelativeTo(null);
 		frmInit.getContentPane().setLayout(null);
@@ -64,6 +67,7 @@ public class FrmInit {
 		//ImageIcon icon = new ImageIcon("images/2048.svg");
 		frmInit.setIconImage(new ImageIcon("images/2048.svg").getImage());
 		//*******
+       
         JPanel panel = new JPanel() {
             private static final long serialVersionUID = 1L;
 
@@ -71,7 +75,7 @@ public class FrmInit {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    BufferedImage image = ImageIO.read(new File("images/background.jpeg")); 
+                    BufferedImage image = ImageIO.read(new File("images/background.jpg")); 
                     g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -81,42 +85,63 @@ public class FrmInit {
         
         frmInit.setContentPane(panel);
 		
-		JRadioButton jrbPastel = new JRadioButton("PASTEL");
-		jrbPastel.setForeground(new Color(0, 0, 0));
-		jrbPastel.setSelected(true);
+        JRadioButton jrbPastel = new JRadioButton("Colores pastel");
+		jrbPastel.setHorizontalAlignment(SwingConstants.CENTER);
+		jrbPastel.setFont(new Font("Monospaced", Font.BOLD, 14));
+		jrbPastel.setBackground(new Color(255, 121, 206));
+		jrbPastel.setBorder(null);
+		jrbPastel.setForeground(new Color(18, 2, 43));
 		buttonGroupColor.add(jrbPastel);
-		jrbPastel.setBounds(80, 248, 149, 23);
+		jrbPastel.setBounds(398, 322, 205, 40);
 		panel.add(jrbPastel);
 		
-		JRadioButton jrbGreen = new JRadioButton("GREEN");
-		jrbGreen.setForeground(new Color(0, 0, 0));
-		buttonGroupColor.add(jrbGreen);
-		jrbGreen.setBounds(228, 248, 149, 23);
+		
+		JRadioButton jrbGreen = new JRadioButton("Colores tradicionales");
+		jrbGreen.setHorizontalAlignment(SwingConstants.CENTER);
+		jrbGreen.setBounds(168, 322, 205, 40);
 		panel.add(jrbGreen);
+		jrbGreen.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		jrbGreen.setFont(new Font("Monospaced", Font.BOLD, 14));
+		jrbGreen.setBackground(new Color(255, 121, 206));
+		jrbGreen.setSelected(true);
+		jrbGreen.setForeground(new Color(18, 2, 43));
+		buttonGroupColor.add(jrbGreen);
         
-		JRadioButton jrb4 = new JRadioButton("Clasic 4x4");
-		jrb4.setForeground(new Color(0, 0, 0));
+		JRadioButton jrb4 = new JRadioButton("Tamaño clasic 4x4");
+		jrb4.setHorizontalAlignment(SwingConstants.CENTER);
+		jrb4.setFont(new Font("Monospaced", Font.BOLD, 14));
+		jrb4.setBackground(new Color(255, 121, 206));
+		jrb4.setForeground(new Color(18, 2, 43));
 		jrb4.setSelected(true);
 		buttonGroupSize.add(jrb4);
-		jrb4.setBounds(80, 305, 149, 23);
+		jrb4.setBounds(168, 381, 205, 40);
 		panel.add(jrb4);
 		
-		JRadioButton jrb5 = new JRadioButton("Large 5x5");
-		jrb5.setForeground(new Color(0, 0, 0));
+		JRadioButton jrb5 = new JRadioButton("Tamaño large 5x5");
+		jrb5.setHorizontalAlignment(SwingConstants.CENTER);
+		jrb5.setFont(new Font("Monospaced", Font.BOLD, 14));
+		jrb5.setBackground(new Color(255, 121, 206));
+		jrb5.setForeground(new Color(18, 2, 43));
 		buttonGroupSize.add(jrb5);
-		jrb5.setBounds(228, 305, 149, 23);
+		jrb5.setBounds(398, 381, 205, 40);
 		panel.add(jrb5);
 		
         JButton btnNuevoJuego = new JButton("Nuevo Juego");
+        btnNuevoJuego.setBorderPainted(false);
+        btnNuevoJuego.setFont(new Font("Monospaced", Font.BOLD, 25));
+        btnNuevoJuego.setForeground(Color.WHITE);
+        btnNuevoJuego.setBorder(new EmptyBorder(0, 0, 0, 0));
+        btnNuevoJuego.setBackground(new Color(255, 0, 104));
+		
 		btnNuevoJuego.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String modeColor = "";
 				int size = 4;
 				if (jrbPastel.isSelected()) {
-					modeColor = jrbPastel.getText();
+					modeColor = "PASTEL";
 				} 
 				if (jrbGreen.isSelected()) {
-					modeColor = jrbGreen.getText();
+					modeColor = "GREEN";
 				}
 				if (jrb4.isSelected()) {
 					size = 4;
@@ -131,28 +156,22 @@ public class FrmInit {
 			}
 		});
 		panel.setLayout(null);
-		btnNuevoJuego.setBounds(45, 29, 180, 25);
+		btnNuevoJuego.setBounds(168, 189, 435, 48);
 		frmInit.getContentPane().add(btnNuevoJuego);
 		
 		JButton btnMejoresPuntajes = new JButton("Mejores Puntajes");
+		btnMejoresPuntajes.setFont(new Font("Monospaced", Font.BOLD, 25));
+		btnMejoresPuntajes.setForeground(new Color(18, 2, 43));
+		btnMejoresPuntajes.setBackground(new Color(255, 121, 206));
+		btnMejoresPuntajes.setBorder(null);
 		btnMejoresPuntajes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				FrmScores fs = new FrmScores();
 				fs.setVisible(true);
 			}
 		});
-		btnMejoresPuntajes.setBounds(234, 29, 180, 25);
+		btnMejoresPuntajes.setBounds(168, 255, 435, 48);
 		frmInit.getContentPane().add(btnMejoresPuntajes);
-		
-		JLabel lblEscogerLaPaleta = new JLabel("Escoger la paleta de colores del tablero");
-		lblEscogerLaPaleta.setForeground(new Color(115, 210, 22));
-		lblEscogerLaPaleta.setBounds(70, 225, 333, 15);
-		panel.add(lblEscogerLaPaleta);
-		
-		JLabel lblEscogeElTamao = new JLabel("Escoge el tamaño del tablero");
-		lblEscogeElTamao.setForeground(new Color(115, 210, 22));
-		lblEscogeElTamao.setBounds(70, 279, 333, 15);
-		panel.add(lblEscogeElTamao);
 		
 	}
 }
