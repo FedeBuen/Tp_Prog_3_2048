@@ -91,7 +91,6 @@ public class FrmBoard extends JFrame {
 
 		tblBoard = new JTable();
 
-		tblBoard.setRowMargin(10);
 		tblBoard.setRowHeight(400 / size);
 		tblBoard.setCellSelectionEnabled(false); // Deshabilitar la selección de celdas
 		tblBoard.setRowSelectionAllowed(false); // Deshabilitar la selección de filas
