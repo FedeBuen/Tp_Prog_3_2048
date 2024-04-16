@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.EventObject;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -17,7 +18,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.CellEditorListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 import controls.Board;
@@ -100,7 +103,47 @@ public class FrmBoard extends JFrame {
 		Color customColor = new Color(46, 27, 91); // RGB para #1E252D
 		tblBoard.setBackground(customColor);
 		tblBoard.setBounds(180, 88, 424, 407);
+		
+        // Deshabilitar la edición por doble clic para el tablero
+        tblBoard.setDefaultEditor(Object.class, new TableCellEditor() {
+            @Override
+            public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+                return null;
+            }
 
+            @Override
+            public Object getCellEditorValue() {
+                return null;
+            }
+
+            @Override
+            public boolean isCellEditable(EventObject anEvent) {
+                return false;
+            }
+
+            @Override
+            public boolean shouldSelectCell(EventObject anEvent) {
+                return false;
+            }
+
+            @Override
+            public boolean stopCellEditing() {
+                return true;
+            }
+
+            @Override
+            public void cancelCellEditing() {
+            }
+
+            @Override
+            public void addCellEditorListener(CellEditorListener l) {
+            }
+
+            @Override
+            public void removeCellEditorListener(CellEditorListener l) {
+            }
+
+        });
 
 		contentPane.add(tblBoard);
 
